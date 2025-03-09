@@ -35,12 +35,10 @@ export const isAuthenticated = async function (req, res, next) {
             });
         }
 
-        // console.log('auth Middleware', user);
         // console.log('auth Middleware before', req);
         
-        req.user = user.id; // user and response ID are same eg: "67499aa448b9f40d1bed1c84"
-
-        // console.log('auth Middleware after', req.user);
+        req.user = user; 
+      //console.log('auth Middleware after', req);
         next();
     } catch (error) {
         console.log(error)
@@ -49,4 +47,14 @@ export const isAuthenticated = async function (req, res, next) {
             message: 'Invalid token'
         });
     }
+};
+
+export const isAdmin = (req, res, next) => {
+    if (req.user.usertype !== 'admin') {
+        return res.status(403).json({
+            success: false,
+            message: "Access denied. Admins only."
+        });
+    }
+    next();
 };

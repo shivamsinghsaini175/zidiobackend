@@ -58,7 +58,7 @@ export const loginController = async function (req, res) {
 
 export const getUserController = async function (req, res) {
   try {
-    const user = await getUserService(req.user);
+    const user = await getUserService(req.user.id);
     return res.status(200).json({
       success: true,
       message:'User fetched successfully',
@@ -76,7 +76,7 @@ export const getUserController = async function (req, res) {
 
 export const updateUserController = async function (req, res) {
   try {
-      const userId = req.user;
+      const userId = req.user.id;
       const data = req.body;
 
       const userToUpdate = await updateUserService(userId, data);

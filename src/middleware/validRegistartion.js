@@ -1,8 +1,8 @@
 export const validRegistartion = function(req, res, next) {
-    const {username, email, password, phone, address} = req.body;
+    const {username, email, password} = req.body;
 
         // Validation
-        if(!username || !email || !password || !phone || !address) {
+        if(!username || !email || !password) {
             return res.status(400).send({
                 success: false,
                 message: "Please Provide All Fields"
