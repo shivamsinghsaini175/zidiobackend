@@ -22,3 +22,33 @@ export const createTaskService = async function (taskData) {
         throw error;
     }
 };
+
+export const updateTaskService = async function (taskId, statusToUpdate) {
+    try {
+        const isTaskValid = await taskRepository.getTaskById(taskId);
+        if(!isTaskValid) {
+            throw new Error("Task Not Found")
+        };
+        const updatedTask = await taskRepository.update(taskId, statusToUpdate);
+        return updatedTask;
+    } catch (error) {
+        console.log("Create Task service error", error);
+        throw error;
+    }
+};
+
+export const deleteTaskService = async function (taskId) {
+   try {
+        const isTaskValid = await taskRepository.getTaskById(taskId);
+        
+        if(!isTaskValid) {
+            throw new Error("Task Not Found")
+        };
+
+        const taskToDelete = await taskRepository.delete(taskId);
+        return taskToDelete;
+   } catch (error) {
+        console.log("delete Task service error", error);
+        throw error;
+   }  
+};

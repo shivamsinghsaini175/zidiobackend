@@ -1,4 +1,4 @@
-import { createTaskService } from "../service/taskService.js";
+import { createTaskService, deleteTaskService, updateTaskService } from "../service/taskService.js";
 
 export const createTaskController = async function (req, res) {
     try {
@@ -17,6 +17,47 @@ export const createTaskController = async function (req, res) {
           });
     } catch (error) {
         console.error("Error in creating Task controller :", error);
+        res.status(500).send({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message
+      });
+    }
+};
+
+export const updateTaskController = async function (req, res) {
+    try {
+        const taskId = req.params.taskId;
+        const statusToUpdate = req.body;
+
+        const response = await updateTaskService(taskId, statusToUpdate);
+        res.status(201).send({
+            success: true,
+            message: "Task Updated",
+            data: response
+          });
+    } catch (error) {
+        console.error("Error in updating Task controller", error);
+        res.status(500).send({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message
+      });
+    }
+};
+
+export const deleteTaskController = async function (req, res) {
+    try {
+        const taskId = req.params.taskId;
+
+        const response = await deleteTaskService(taskId);
+        res.status(201).send({
+            success: true,
+            message: "Task Deleted",
+            data: response
+        });
+    } catch (error) {
+        console.error("Error in deleting Task controller", error);
         res.status(500).send({
         success: false,
         message: "Internal Server Error",
