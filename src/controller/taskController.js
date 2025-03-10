@@ -1,4 +1,4 @@
-import { createTaskService, deleteTaskService, updateTaskService } from "../service/taskService.js";
+import { createTaskService, deleteTaskService, getAllTaskService, updateTaskService } from "../service/taskService.js";
 
 export const createTaskController = async function (req, res) {
     try {
@@ -58,6 +58,24 @@ export const deleteTaskController = async function (req, res) {
         });
     } catch (error) {
         console.error("Error in deleting Task controller", error);
+        res.status(500).send({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message
+      });
+    }
+};
+
+export const getAllTaskController = async function (req, res) {
+    try {
+        const response = await getAllTaskService();
+        res.status(201).send({
+            success: true,
+            message: "All Task Fetched",
+            data: response
+        });
+    } catch (error) {
+        console.error("Error in get all Task controller", error);
         res.status(500).send({
         success: false,
         message: "Internal Server Error",

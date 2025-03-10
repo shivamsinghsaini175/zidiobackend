@@ -40,7 +40,7 @@ export const updateTaskService = async function (taskId, statusToUpdate) {
 export const deleteTaskService = async function (taskId) {
    try {
         const isTaskValid = await taskRepository.getTaskById(taskId);
-        
+
         if(!isTaskValid) {
             throw new Error("Task Not Found")
         };
@@ -51,4 +51,14 @@ export const deleteTaskService = async function (taskId) {
         console.log("delete Task service error", error);
         throw error;
    }  
+};
+
+export const getAllTaskService = async function () {
+  try {
+      const tasks = await taskRepository.getAllTaskWithDetails();
+      return tasks;
+  } catch (error) {
+    console.log("get all Task service error", error);
+    throw error;
+  }  
 };

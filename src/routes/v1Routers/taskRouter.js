@@ -1,5 +1,5 @@
 import express from "express";
-import { createTaskController, deleteTaskController, updateTaskController } from "../../controller/taskController.js";
+import { createTaskController, deleteTaskController, getAllTaskController, updateTaskController } from "../../controller/taskController.js";
 import { isAdmin, isAuthenticated } from "../../middleware/authValidation.js";
 
 // Router object
@@ -10,5 +10,7 @@ taskRouter.post('/create/:userId', isAuthenticated, isAdmin, createTaskControlle
 taskRouter.put('/status/:taskId', isAuthenticated, isAdmin, updateTaskController);
 
 taskRouter.delete('/delete/:taskId', isAuthenticated, isAdmin, deleteTaskController);
+
+taskRouter.get('/', isAuthenticated, isAdmin, getAllTaskController);
 
 export default taskRouter;
