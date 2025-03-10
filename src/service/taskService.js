@@ -62,3 +62,13 @@ export const getAllTaskService = async function () {
     throw error;
   }  
 };
+
+export const getTaskByUserService = async function (userId) {
+    try {
+        const tasks = await taskRepository.getTaskWithUserId(userId);
+        return tasks;
+    } catch (error) {
+        console.log("get all Task service error", error);
+        throw error;
+    }
+};

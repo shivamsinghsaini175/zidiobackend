@@ -27,4 +27,17 @@ export const taskRepository = {
      }
    },
 
+   getTaskWithUserId: async function (userId) {
+      try {
+         const tasks = await Task.find({ assignedTo: userId })
+         .populate('assignedBy', 'username email')
+         .populate('assignedTo', 'username email');
+
+         return tasks;
+      } catch (error) {
+         console.log(error);
+         throw error;
+      }
+   },
+
 };

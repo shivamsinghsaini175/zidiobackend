@@ -1,4 +1,4 @@
-import { createTaskService, deleteTaskService, getAllTaskService, updateTaskService } from "../service/taskService.js";
+import { createTaskService, deleteTaskService, getAllTaskService, getTaskByUserService, updateTaskService } from "../service/taskService.js";
 
 export const createTaskController = async function (req, res) {
     try {
@@ -82,4 +82,31 @@ export const getAllTaskController = async function (req, res) {
         error: error.message
       });
     }
+};
+
+export const getTaskByUserController = async function (req, res) {
+    try {
+        const userId = req.params.userId;
+
+        if (req.user.id !== userId) {
+            return res.status(403).json({
+                success: false,
+                message: "Access denied. You can only view your own tasks."
+            });
+        };
+
+        const response = await getTaskByUserService(userId);
+        res.status(201).send({
+            success: true,
+            message: "Task Fetched for a user",
+            data: response
+        });
+    } catch (error) {
+        console.error("Error in get Task By User controller", error);
+        res.status(500).send({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message
+      });
+    }  
 };
